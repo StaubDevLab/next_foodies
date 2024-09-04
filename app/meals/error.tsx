@@ -8,6 +8,7 @@ const Error = ({error} : {error: ErrorProps}) => {
         <main className={"error"}>
             <h1>An error occured ! </h1>
             <p>Please try again later</p>
+            {error && <p>{error.error?.message}</p>}
         </main>
     );
 };
