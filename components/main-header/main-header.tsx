@@ -9,7 +9,7 @@ const MainHeader = () => {
         <>
             <MainHeaderBackground/>
         <header className={classes.header}>
-            <Link className={classes.logo} href={"/"}>
+            <Link className={classes.logo} href={"/public"}>
                 <Image src={logoImg} alt={"A plate with food on it"}/>
                 Nextlevel Food
             </Link>
