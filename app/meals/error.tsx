@@ -1,7 +1,9 @@
 'use client';
 import React from 'react';
-
-const Error = ({error} : {error: Error}) => {
+interface ErrorProps{
+    error?: Error
+}
+const Error = ({error} : {error: ErrorProps}) => {
     return (
         <main className={"error"}>
             <h1>An error occured ! </h1>
