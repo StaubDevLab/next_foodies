@@ -1,4 +1,9 @@
 'use server'
+
+import {deleteMeal, saveMeal} from "@/lib/meals";
+import {redirect} from "next/navigation";
+import {Meal} from "@/@types/meal";
+
 export async function shareMeal(formData: FormData) {
 
     const meal = {
@@ -9,5 +14,12 @@ export async function shareMeal(formData: FormData) {
         creator : formData.get("name"),
         creator_email: formData.get("email"),
     }
-    console.log(meal);
+    await saveMeal(meal)
+    redirect('/meals')
+
+}
+
+export async function removeMeal(mealID: string) {
+    await deleteMeal(mealID)
+    redirect('/meals')
 }

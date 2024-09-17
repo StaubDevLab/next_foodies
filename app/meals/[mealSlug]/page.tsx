@@ -1,14 +1,16 @@
 import React from 'react';
 import classes from './page.module.css';
 import Image from "next/image";
-import {getMealsBySlug} from "@/lib/meals";
+import {deleteMeal, getMealsBySlug} from "@/lib/meals";
 import {Meal} from "@/@types/meal";
 import {notFound} from "next/navigation";
+import MealDeleteBtn from "@/components/meals/meal-delete-btn";
 
 
 async function MealDetailPage({params}: { params: { mealSlug: string } }) {
 
     const meal = await getMealsBySlug(params.mealSlug) as Meal;
+
     if (!meal) {
         notFound()
     }
@@ -30,6 +32,8 @@ async function MealDetailPage({params}: { params: { mealSlug: string } }) {
                     __html: meal.instructions
                 }}></p>
             </main>
+            <MealDeleteBtn id={meal.id}/>
+
         </>
     );
 }

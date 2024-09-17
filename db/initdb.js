@@ -1,6 +1,5 @@
-const sql = require('better-sqlite3');
-const db = sql('meals.db');
-
+const prisma = require('@prisma/client').PrismaClient;
+const prismaClient = new prisma();
 const dummyMeals = [
     {
         title: 'Juicy Cheese Burger',
@@ -163,37 +162,18 @@ const dummyMeals = [
         creator_email: 'sophiagreen@example.com',
     },
 ];
-
-db.prepare(`
-   CREATE TABLE IF NOT EXISTS meals (
-       id INTEGER PRIMARY KEY AUTOINCREMENT,
-       slug TEXT NOT NULL UNIQUE,
-       title TEXT NOT NULL,
-       image TEXT NOT NULL,
-       summary TEXT NOT NULL,
-       instructions TEXT NOT NULL,
-       creator TEXT NOT NULL,
-       creator_email TEXT NOT NULL
-    )
-`).run();
-
-async function initData() {
-    const stmt = db.prepare(`
-      INSERT INTO meals VALUES (
-         null,
-         @slug,
-         @title,
-         @image,
-         @summary,
-         @instructions,
-         @creator,
-         @creator_email
-      )
-   `);
-
-    for (const meal of dummyMeals) {
-        stmt.run(meal);
+async function insertDummyMeals() {
+    try {
+        await prismaClient.meal.createMany({
+            data: dummyMeals
+        });
+        console.log('Données insérées avec succès !');
+    } catch (error) {
+        console.error('Erreur lors de l\'insertion des données :', error);
+    } finally {
+        await prismaClient.$disconnect(); // Ferme la connexion à la base de données
     }
 }
 
-initData();
+// Appel de la fonction pour insérer les repas
+insertDummyMeals();
