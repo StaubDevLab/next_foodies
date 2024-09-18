@@ -19,7 +19,7 @@ async function MealDetailPage({params}: { params: { mealSlug: string } }) {
         <>
             <header className={classes.header}>
                 <div className={classes.image}>
-                    <Image src={meal.image} alt={""} fill/>
+                    <Image src={`https://next-foodies.s3.eu-west-3.amazonaws.com${meal.image}`} alt={""} fill/>
                 </div>
                 <div className={classes.headerText}>
                     <h1>{meal.title}</h1>
