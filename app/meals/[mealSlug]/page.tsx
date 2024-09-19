@@ -1,11 +1,21 @@
 import React from 'react';
 import classes from './page.module.css';
 import Image from "next/image";
-import {deleteMeal, getMealsBySlug} from "@/lib/meals";
+import {getMealsBySlug} from "@/lib/meals";
 import {Meal} from "@/@types/meal";
 import {notFound} from "next/navigation";
 import MealDeleteBtn from "@/components/meals/meal-delete-btn";
 
+export async function generateMetadata({params}) {
+    const meal = await getMealsBySlug(params.mealSlug) as Meal;
+    if (!meal) {
+        notFound()
+    }
+    return {
+        title: meal.title,
+        description: meal.summary
+    }
+}
 
 async function MealDetailPage({params}: { params: { mealSlug: string } }) {
 
